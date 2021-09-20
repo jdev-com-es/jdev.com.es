@@ -1,2 +1,2 @@
 # jdev.com.es
-Website
+The jDev Website has been moved here.
