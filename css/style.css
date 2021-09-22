@@ -61,6 +61,11 @@ h2 {
     filter: invert(1);
 }
 
+#some-words {
+    text-align: center;
+    padding: 1rem;
+}
+
 @media screen and (max-width: 600px) {
     .cards {
         flex-direction: column;
