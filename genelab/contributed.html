@@ -37,7 +37,7 @@
         };
 
         function prep(str) {
-            return str.split(' ').map(x => x[0] + "*".repeat(x.substr(1).length)).join(' ');
+            return str.trim().split(' ').map(x => x[0] + "*".repeat(x.substr(1).length)).join(' ');
         }
 
         const app = initializeApp(firebaseConfig);
