@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jDev GeneLab - HEGADL</title>
+
+    <meta name="author" content="JanCraft">
+    <meta name="description" content="jDev GeneLab - Human External Gene Aggregation Database and Laboratory">
+    
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+    <style>
+        html, body {
+            font-family: sans-serif;
+            background: #333;
+            color: #fff;
+            margin: 0;
+        }
+
+        h2 {
+            background-color: #046DAA;
+            margin: 0;
+            padding: 1rem;
+        }
+        #subjectid, #content {
+            margin: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h2>GeneLab HEGADL Inspector</h2>
+    <h4 id="subjectid"></h4>
+
+    <div id="content"></div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js";
+        import { getFirestore, collection, getDoc, doc } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore.js";
+        const params = new URLSearchParams(location.search);
+
+        const biogenders = {
+            'm': 'Male',
+            'f': 'Female',
+            'i': 'Intersex'
+        }
+
+        function keytoname(key) {
+            return {
+                N: "brown",
+                B: "blue",
+                H: "hazel",
+                G: "gray",
+                E: "green",
+                A: "amber",
+                K: "black",
+                W: "deepbrown",
+                U: "auburn",
+                R: "red",
+                L: "blond",
+                Y: "deepyellow",
+                F: "yellow",
+                T: "light",
+                I: "white"
+            }[key];
+        }
+
+        function cap(s) {
+            return s[0].toUpperCase() + s.substr(1);
+        }
+
+        const eye_rarity = {
+            N: .8,
+            B: .1,
+            H: .05,
+            G: .03,
+            E: .02,
+            A: .001
+        };
+
+        const hair_rarity = {
+            K: .9,
+            W: .8,
+            N: .11,
+            U: .02,
+            R: .01,
+            L: .03,
+            G: .25
+        };
+
+        const skin_rarity = {
+            W: .024,
+            N: .213,
+            Y: .274,
+            F: .293,
+            T: .196,
+            I: .196
+        };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUAk_ApThWMffxak1sYr9hPowFM4MY7zc",
+            authDomain: "jdev-genelab-hegadl.firebaseapp.com",
+            projectId: "jdev-genelab-hegadl",
+            storageBucket: "jdev-genelab-hegadl.appspot.com",
+            messagingSenderId: "424059033160",
+            appId: "1:424059033160:web:511a667551feb72f466a7d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+
+        document.getElementById('subjectid').innerHTML = `Subject #${params.get('id')}<br>Loading...`;
+
+        const docRef = doc(db, 'aggregation', params.get('id'));
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+
+            const rarity = eye_rarity[data.facial[0]] * hair_rarity[data.facial[1]] * skin_rarity[data.facial[2]];
+
+            document.getElementById('subjectid').innerHTML = `Subject #${params.get('id')}<br>${data.fullname}`;
+            document.getElementById('content').innerHTML = `
+                <div><b>Biological Gender</b> <i>${biogenders[data.biogender]}</i></div>
+                <div><b>Age</b> <i>${data.age}</i></div>
+                <div><b>Country</b> <i>${data.country}</i></div>
+                <div><b>Height</b> <i>${data.height} cm</i></div>
+                <div><b>Facial Classifier</b> <i>${data.facial}</i></div>
+                <br>
+                <div><b>Eye Color</b> <i>${cap(keytoname(data.facial[0]))}</i></div>
+                <div><b>Hair Color</b> <i>${cap(keytoname(data.facial[1]))}</i></div>
+                <div><b>Skin Color</b> <i>${cap(keytoname(data.facial[2]))}</i></div>
+                <br>
+                <div><b>Trait Rarity</b> <i>${(rarity * 100).toFixed(2)}%</i></div>
+            `;
+
+            console.log(data);
+        } else {
+            window.close();
+        }
+    </script>
+</body>
+</html>

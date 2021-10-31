@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jDev GeneLab</title>
+
+    <meta name="author" content="JanCraft">
+    <meta name="description" content="jDev GeneLab - Human External Gene Aggregation Database and Laboratory">
+
+    <link rel="stylesheet" href="/genelab/style.css">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+</head>
+<body>
+    <nav role="navigation">
+        <div class="flex-center">
+            <a href="/genelab/"><img src="/img/favicon.png" alt="jDev" width="32" height="32"></a>
+            <h1>GeneLab</h1>
+        </div>
+        <div class="flex-center">
+            <a href="#s-what">What is it?</a>
+            <a href="#s-how">How does it work?</a>
+            <a href="#s-privacy">Privacy</a>
+            <a href="/genelab/hegadl" class="link" target="jdev-genelab-hegadl">HEGADL</a>
+        </div>
+    </nav>
+    <main role="main">
+        <section id="s-intro">
+            <h2 class="h-mb-low">jDev GeneLab</h2>
+            <h4 class="h-mt-low no-bold">Codename: <i>Project HEGADL</i></h4>
+
+            <q>
+                Humans have unique attributes and traits, every single
+                human I have seen is different. With enough samples of said
+                traits, we can experiment on them <i>without</i> even talking to them.
+                <br><br>
+                Why should I find <i>test subjects</i> when I can <i>create</i> said test subjects.
+            </q>
+        </section>
+        <section id="s-contribute">
+            <h2>Contribute</h2>
+
+            <form action="/genelab/contribute" method="get">
+                <label for="fullname">Full Name</label>
+                <input type="text" autocomplete="off" id="fullname" name="fullname" placeholder="Full Name...">
+
+                <label for="country">Country</label>
+                <input type="text" autocomplete="off" id="country" name="country" placeholder="Country...">
+
+                <label for="height">Height</label>
+                <input type="number" autocomplete="off" id="height" name="height" placeholder="Height (in cm)...">
+
+                <label for="age">Age</label>
+                <input type="number" autocomplete="off" id="age" name="age" placeholder="Age...">
+
+                <label for="biogender">Biological Gender</label>
+                <select id="biogender" name="biogender">
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                    <option value="i">Intersex</option>
+                </select>
+
+                <input type="submit" value="Contribute!" style="cursor:pointer">
+                <small>by contributing you accept to us using all data you <i>explicitly</i> provide.</small>
+            </form>
+        </section>
+        <section id="s-what">
+            <h2>What is it?</h2>
+            <p>
+                jDev GeneLab, also known as <i>Project HEGADL</i>
+                 (Human External Gene Aggregation Database and Laboratory)
+                is a project that aims to create human gene profiles only using
+                <i>externally-visible</i> genes. These gene profiles will be
+                aggregated and saved in the <i>HEGADL public database</i> and
+                will be experimented with by the <i>HEGADL virtual laboratory</i>.
+            </p>
+        </section>
+        <section id="s-how">
+            <h2>How does it work?</h2>
+            <p>
+                jDev GeneLab will need you to indicate some values (full name, country, height, biological gender, age, etc.)
+                and it will then ask you to provide us with some facial information.
+            </p>
+        </section>
+        <section id="s-privacy">
+            <h2>Privacy</h2>
+            <p>
+                We take privacy very seriously, we do not want to track you, we <i>don't care</i> about
+                <i>who</i> you are, we care about <i>what</i> you are. In fact, we don't even store your name on our database,
+                only your <i>Subject Number</i> is public.
+
+                We don't want money or personal information, we want the whole picture,
+                the aggregation of all of these external genes.
+            </p>
+        </section>
+    </main>
+    <footer>
+        Copyright &copy; 2021 jDev ES
+    </footer>
+</body>
+</html>

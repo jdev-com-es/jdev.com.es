@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jDev GeneLab - HEGADL</title>
+
+    <meta name="author" content="JanCraft">
+    <meta name="description" content="jDev GeneLab - Human External Gene Aggregation Database and Laboratory">
+    
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+    <style>
+        html, body {
+            font-family: sans-serif;
+            background: #333;
+            color: #fff;
+            margin: 0;
+        }
+
+        h2 {
+            background-color: #046DAA;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        main {
+            margin: 1rem;
+        }
+
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #282828;
+        }
+
+        table tr:hover {
+            background-color: #2a2a2a;
+        }
+
+        table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #046DAA;
+            color: white;
+        }
+
+        a {
+            color: inherit;
+            background-image: url('/genelab/external-link-alt-solid.svg');
+            background-position: 5px 0px;
+            background-repeat: no-repeat;
+            padding-left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <h2>GeneLab HEGADL Database</h2>
+    <main role="main">
+        <table>
+            <tr>
+                <th>Subject #</th>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>Biogender</th>
+                <th>Height</th>
+                <th>Country</th>
+                <th>Facial</th>
+                <th>Actions</th>
+            </tr>
+        </table>
+    </main>
+    
+    <script type="module">
+        const table = document.querySelector('table');
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore.js";
+        const params = new URLSearchParams(location.search);
+
+        const biogenders = {
+            'm': 'Male',
+            'f': 'Female',
+            'i': 'Intersex'
+        }
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUAk_ApThWMffxak1sYr9hPowFM4MY7zc",
+            authDomain: "jdev-genelab-hegadl.firebaseapp.com",
+            projectId: "jdev-genelab-hegadl",
+            storageBucket: "jdev-genelab-hegadl.appspot.com",
+            messagingSenderId: "424059033160",
+            appId: "1:424059033160:web:511a667551feb72f466a7d"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+
+        const querySnapshot = await getDocs(collection(db, 'aggregation'));
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const row = table.insertRow();
+            row.insertCell().textContent = data.subjectid;
+            row.insertCell().textContent = data.fullname;
+            row.insertCell().textContent = data.age;
+            row.insertCell().textContent = biogenders[data.biogender];
+            row.insertCell().textContent = data.height + " cm";
+            row.insertCell().textContent = data.country;
+            row.insertCell().textContent = data.facial;
+            row.insertCell().innerHTML = `
+                <a target="genelab-ins-${data.subjectid}" href="/genelab/hegadl-inspect?id=${data.subjectid}">Inspect</a>
+                <a target="genelab-exp-${data.subjectid}" href="genelab://experiment/${data.subjectid}">Lab</a>
+            `;
+        });
+    </script>
+</body>
+</html>
