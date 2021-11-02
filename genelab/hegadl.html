@@ -69,14 +69,14 @@
     <main role="main">
         <table>
             <tr>
-                <th>Subject #</th>
-                <th>Full Name</th>
-                <th>Age</th>
-                <th>Biogender</th>
-                <th>Height</th>
-                <th>Country</th>
+                <th># de Sujeto</th>
+                <th>Nombre Completo</th>
+                <th>Edad</th>
+                <th>Género Biológico</th>
+                <th>Altura</th>
+                <th>País</th>
                 <th>Facial</th>
-                <th>Actions</th>
+                <th>Acciones</th>
             </tr>
         </table>
     </main>
@@ -88,9 +88,9 @@
         const params = new URLSearchParams(location.search);
 
         const biogenders = {
-            'm': 'Male',
-            'f': 'Female',
-            'i': 'Intersex'
+            'm': 'Macho',
+            'f': 'Hembra',
+            'i': 'Intersexual'
         }
 
         const firebaseConfig = {
@@ -117,8 +117,7 @@
             row.insertCell().textContent = data.country;
             row.insertCell().textContent = data.facial;
             row.insertCell().innerHTML = `
-                <a target="genelab-ins-${data.subjectid}" href="/genelab/hegadl-inspect?id=${data.subjectid}">Inspect</a>
-                <a target="genelab-exp-${data.subjectid}" href="genelab://experiment/${data.subjectid}">Lab</a>
+                <a target="genelab-ins-${data.subjectid}" href="/genelab/hegadl-inspect?id=${data.subjectid}">Inspeccionar</a>
             `;
         });
     </script>

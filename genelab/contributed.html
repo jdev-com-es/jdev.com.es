@@ -19,8 +19,8 @@
     </style>
 </head>
 <body>
-    <h1>Thanks for contributing!</h1>
-    <h4>Redirecting to main website...</h4>
+    <h1>Gracias por contribuir!</h1>
+    <h4>Redireccionando, por favor espera...</h4>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js";
@@ -54,7 +54,7 @@
                 fullname: prep(params.get('fullname'))
             });
             console.log("Document written: ", docRef);
-            setTimeout(() => location.href = "/genelab/", 2000);
+            setTimeout(() => location.href = `/genelab/hegadl-inspect?id=${params.get('subjectid')}`, 2000);
         } catch (e) {
             console.error("Error adding document: ", e);
         }

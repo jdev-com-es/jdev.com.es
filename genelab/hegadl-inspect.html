@@ -40,28 +40,42 @@
         const params = new URLSearchParams(location.search);
 
         const biogenders = {
-            'm': 'Male',
-            'f': 'Female',
-            'i': 'Intersex'
+            'm': 'Macho',
+            'f': 'Hembra',
+            'i': 'Intersexual'
         }
 
         function keytoname(key) {
             return {
-                N: "brown",
-                B: "blue",
-                H: "hazel",
-                G: "gray",
-                E: "green",
-                A: "amber",
-                K: "black",
-                W: "deepbrown",
-                U: "auburn",
-                R: "red",
-                L: "blond",
-                Y: "deepyellow",
-                F: "yellow",
-                T: "light",
-                I: "white"
+                N: "Marrón",
+                B: "Azul",
+                H: "Avellana",
+                G: "Gris",
+                E: "Verde",
+                A: "Ámbar",
+                K: "Negro",
+                W: "Marrón Profundo",
+                U: "Marrón-Rojizo",
+                R: "Rojo",
+                L: "Rubio",
+                Y: "Amarillo Profundo",
+                F: "Amarillo",
+                T: "Claro",
+                I: "Blanco / Pálido",
+                '?': "N/A",
+                "/": "Liso",
+                "~": "Ondulado",
+                "&": "Rizado",
+                "#": "Afro-texturizado",
+                "0": "Ovalado",
+                O: "Redondo",
+                "@": "Cuadrado",
+                "<": "Rombo",
+                "^": "Punta hacia Arriba",
+                "_": "Punta hacia Abajo",
+                X: "No",
+                "-": "Pocas",
+                "+": "Muchas"
             }[key];
         }
 
@@ -116,21 +130,25 @@
         if (docSnap.exists()) {
             const data = docSnap.data();
 
-            const rarity = eye_rarity[data.facial[0]] * hair_rarity[data.facial[1]] * skin_rarity[data.facial[2]];
+            const rarity = eye_rarity[data.facial[0]] * hair_rarity[data.facial[1]] * skin_rarity[data.facial[2]] * ((data.facial[5] == '-' || data.facial[5] == '+') ? .16 : 1);
 
-            document.getElementById('subjectid').innerHTML = `Subject #${params.get('id')}<br>${data.fullname}`;
+            document.getElementById('subjectid').innerHTML = `Sujeto #${params.get('id')}<br>${data.fullname}`;
             document.getElementById('content').innerHTML = `
-                <div><b>Biological Gender</b> <i>${biogenders[data.biogender]}</i></div>
-                <div><b>Age</b> <i>${data.age}</i></div>
-                <div><b>Country</b> <i>${data.country}</i></div>
-                <div><b>Height</b> <i>${data.height} cm</i></div>
-                <div><b>Facial Classifier</b> <i>${data.facial}</i></div>
+                <div><b>Género Biológico</b> <i>${biogenders[data.biogender]}</i></div>
+                <div><b>Edad</b> <i>${data.age}</i></div>
+                <div><b>País</b> <i>${data.country}</i></div>
+                <div><b>Altura</b> <i>${data.height} cm</i></div>
+                <div><b>Clasificador facial</b> <i>${data.facial}</i></div>
                 <br>
-                <div><b>Eye Color</b> <i>${cap(keytoname(data.facial[0]))}</i></div>
-                <div><b>Hair Color</b> <i>${cap(keytoname(data.facial[1]))}</i></div>
-                <div><b>Skin Color</b> <i>${cap(keytoname(data.facial[2]))}</i></div>
+                <div><b>Color de Ojos</b> <i>${cap(keytoname(data.facial[0]))}</i></div>
+                <div><b>Color de Pelo</b> <i>${cap(keytoname(data.facial[1]))}</i></div>
+                <div><b>Color de Piel</b> <i>${cap(keytoname(data.facial[2]))}</i></div>
+
+                <div><b>Forma de la Cara</b> <i>${cap(keytoname(data.facial[3]))}</i></div>
+                <div><b>Forma de los Ojos</b> <i>${cap(keytoname(data.facial[4]))}</i></div>
+                <div><b>Pecas</b> <i>${cap(keytoname(data.facial[5]))}</i></div>
                 <br>
-                <div><b>Trait Rarity</b> <i>${(rarity * 100).toFixed(2)}%</i></div>
+                <div><b>Rareza de Rasgos</b> <i>${(rarity * 100).toFixed(2)}%</i></div>
             `;
 
             console.log(data);

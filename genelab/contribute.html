@@ -96,57 +96,91 @@
     </style>
 </head>
 <body>
-    <h2 id="c-idf">Loading...<br><small>please wait...</small></h2>
+    <h2 id="c-idf">Cargando...<br><small>por favor espera...</small></h2>
 
     <form onsubmit="event.preventDefault();submitform()">
-        <label for="eyecolor">Eye Color</label>
+        <label for="eyecolor">Color de Ojos</label>
         <select id="eyecolor">
-            <option value="null">Select one...</option>
+            <option value="null">Selecciona uno...</option>
 
             <option value="brown" class="color-brown">
-                Brown
+                Marrón
             </option>
             <option value="blue" class="color-blue">
-                Blue
+                Azul
             </option>
             <option value="hazel" class="color-hazel">
-                Hazel
+                Avellana
             </option>
             <option value="gray" class="color-gray">
-                Gray
+                Gris
             </option>
             <option value="green" class="color-green">
-                Green
+                Verde
             </option>
             <option value="amber" class="color-amber">
-                Amber
+                Ámbar
             </option>
         </select>
         
-        <label for="haircolor">Hair Color</label>
+        <label for="haircolor">Color de Pelo</label>
         <select id="haircolor">
-            <option value="null">Select one...</option>
-            <option value="black" class="color-black">Black</option>
-            <option value="deepbrown" class="color-deepbrown">Deep Brown</option>
-            <option value="brown" class="color-brown">Brown</option>
-            <option value="auburn" class="color-brownred">Brown-Red</option>
-            <option value="red" class="color-red">Red</option>
-            <option value="blond" class="color-blond">Blond</option>
-            <option value="gray" class="color-gray">Gray / White</option>
+            <option value="null">Selecciona uno...</option>
+            <option value="black" class="color-black">Negro</option>
+            <option value="deepbrown" class="color-deepbrown">Marrón Profundo</option>
+            <option value="brown" class="color-brown">Marrón</option>
+            <option value="auburn" class="color-brownred">Marrón-Rojizo</option>
+            <option value="red" class="color-red">Rojo</option>
+            <option value="blond" class="color-blond">Rubio</option>
+            <option value="gray" class="color-gray">Gris / Blanco</option>
         </select>
         
-        <label for="skincolor">Skin Color</label>
+        <label for="skincolor">Color de Piel</label>
         <select id="skincolor">
-            <option value="null">Select one...</option>
-            <option value="deepbrown" class="color-deepbrown">Deep Brown</option>
-            <option value="brown" class="color-brown">Brown</option>
-            <option value="deepyellow" class="color-deepyellow">Deep Yellow</option>
-            <option value="yellow" class="color-yellow">Yellow</option>
-            <option value="light" class="color-light">Light</option>
-            <option value="white" class="color-white">White</option>
+            <option value="null">Selecciona uno...</option>
+            <option value="deepbrown" class="color-deepbrown">Marrón Profundo</option>
+            <option value="brown" class="color-brown">Marrón</option>
+            <option value="deepyellow" class="color-deepyellow">Amarillo Profundo</option>
+            <option value="yellow" class="color-yellow">Amarillo</option>
+            <option value="light" class="color-light">Claro</option>
+            <option value="white" class="color-white">Blacno / Pálido</option>
         </select>
 
-        <input type="submit" value="Contribute!" style="cursor:pointer">
+        <label for="hairtype">Tipo de Pelo</label>
+        <select id="hairtype">
+            <option value="null">Selecciona uno...</option>
+            <option value="straight">Liso</option>
+            <option value="wavy">Ondulado</option>
+            <option value="curly">Rizado</option>
+            <option value="afro">Afro-texturizado</option>
+        </select>
+
+        <label for="faceshape">Forma de la Cara</label>
+        <select id="faceshape">
+            <option value="null">Selecciona uno...</option>
+            <option value="oval">Ovalado</option>
+            <option value="round">Redondo</option>
+            <option value="square">Cuadrado</option>
+            <option value="diamond">Rombo</option>
+        </select>
+
+        <label for="eyeshape">Forma de los Ojos</label>
+        <select id="eyeshape">
+            <option value="null">Selecciona uno...</option>
+            <option value="round">Redondo</option>
+            <option value="upturned">Punta hacia Arriba</option>
+            <option value="downturned">Punta hacia Abajo</option>
+        </select>
+
+        <label for="freckles">Pecas</label>
+        <select id="freckles">
+            <option value="null">Selecciona uno...</option>
+            <option value="no">No</option>
+            <option value="low">Pocas</option>
+            <option value="lots">Muchas</option>
+        </select>
+
+        <input type="submit" value="Contribuír!" style="cursor:pointer">
     </form>
     
     <script>
@@ -155,7 +189,7 @@
 
         async function init() {
             document.getElementById('c-idf').innerHTML = `
-                Subject #${subjectid}
+                Sujeto #${subjectid}
                 <br><small>${params.get('fullname')}</small>
             `;
         }
@@ -176,23 +210,39 @@
                 deepyellow: "Y",
                 yellow: "F",
                 light: "T",
-                white: "I"
+                white: "I",
+                straight: "/",
+                wavy: "~",
+                curly: "&",
+                afro: "#",
+                oval: "0",
+                round: "O",
+                square: "@",
+                diamond: "<",
+                upturned: "^",
+                downturned: "_",
+                no: "X",
+                low: "-",
+                lots: "+"
             }[name];
         }
 
-        function facial(a, b, c) {
-            return nametokey(a) + nametokey(b) + nametokey(c);
+        function facial(list) {
+            return list.map(x => nametokey(x)).join('');
         }
 
         async function submitform() {
             const eyecolor = document.getElementById('eyecolor').value;
             const haircolor = document.getElementById('haircolor').value;
             const skincolor = document.getElementById('skincolor').value;
+            const faceshape = document.getElementById('faceshape').value;
+            const eyeshape = document.getElementById('eyeshape').value;
+            const freckles = document.getElementById('freckles').value;
 
             params.set('subjectid', subjectid);
-            params.set('facial', facial(eyecolor, haircolor, skincolor));
+            params.set('facial', facial([eyecolor, haircolor, skincolor, faceshape, eyeshape, freckles]));
 
-            if (eyecolor != 'null' && haircolor != 'null' && skincolor != 'null') location.href = `/genelab/contributed?${params.toString()}`;
+            if (faceshape != 'null' && eyeshape != 'null' && freckles != 'null' && eyecolor != 'null' && haircolor != 'null' && skincolor != 'null') location.href = `/genelab/contributed?${params.toString()}`;
         }
 
         init();
