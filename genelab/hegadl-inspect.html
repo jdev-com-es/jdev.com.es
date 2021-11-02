@@ -26,6 +26,12 @@
         #subjectid, #content {
             margin: 1rem;
         }
+
+        canvas {
+            background: #222;
+            margin-left: .2rem;
+            margin-bottom: .5rem;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +85,26 @@
             }[key];
         }
 
+        function keytocolor(key) {
+            return {
+                N: "#6e4928",
+                B: "#90c6ff",
+                H: "#a8aa44",
+                G: "#b6bccf",
+                E: "#86d190",
+                A: "#ae7420",
+                K: "#222",
+                W: "#573518",
+                U: "#701616",
+                R: "#c23f02",
+                L: "#fff59b",
+                Y: "#dca405",
+                F: "#efcf78",
+                T: "#fde2cc",
+                I: "#fff"
+            }[key];
+        }
+
         function cap(s) {
             return s[0].toUpperCase() + s.substr(1);
         }
@@ -129,6 +155,7 @@
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const data = docSnap.data();
+            window.originaldat = data
 
             const rarity = eye_rarity[data.facial[0]] * hair_rarity[data.facial[1]] * skin_rarity[data.facial[2]] * ((data.facial[5] == '-' || data.facial[5] == '+') ? .16 : 1);
 
@@ -149,11 +176,68 @@
                 <div><b>Pecas</b> <i>${cap(keytoname(data.facial[5]))}</i></div>
                 <br>
                 <div><b>Rareza de Rasgos</b> <i>${(rarity * 100).toFixed(2)}%</i></div>
+                <br><br>
+
+                <div style="display:flex">
+                    <canvas id="facecnv" width="400" height="400"></canvas>
+                    <canvas hidden id="facecnv2" width="400" height="400"></canvas>
+                </div>
+
+                <input id="otherid" type="number" min="0" autocomplete="off" placeholder="# de otro Sujeto">
+                <button onclick="mix()">Mezclar</button>
             `;
+
+            const ctx = document.getElementById('facecnv').getContext('2d');
+            render_face(data.facial, ctx, `#${params.get('id')}`);
 
             console.log(data);
         } else {
             window.close();
+        }
+
+        function render_face(face, ctx, info="render_face()") {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.fillStyle = keytocolor(face[2]);
+
+            //ctx.fillRect(15, 15, 20, 20);
+
+            ctx.strokeStyle = "#fff";
+            ctx.strokeWidth = 1;
+            ctx.strokeText(info, 6, 400-16);
+
+            ctx.save();
+            {
+                ctx.translate(200, 200);
+                ctx.rotate(-45 * Math.PI / 180);
+                ctx.font = "32px sans-serif";
+                ctx.strokeText("IN DEVELOPMENT", -100, 10);
+            }
+            ctx.restore();
+        }
+
+        function mixgenes(a, b) {
+            let c = "";
+            for (let i = 0; i < a.length; i++) {
+                c += Math.random() < .5 ? a[i] : b[i];
+            }
+            return c;
+        }
+
+        window.mix = async () => {
+            const otherid = document.getElementById('otherid').value;
+            if (otherid.trim() == "") return;
+
+            const docRef = doc(db, 'aggregation', otherid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+
+                const mixed = mixgenes(window.originaldat.facial, data.facial);
+
+                document.getElementById('facecnv2').hidden = false;
+                const ctx = document.getElementById('facecnv2').getContext('2d');
+                render_face(mixed, ctx, "Mezclado");
+            }
         }
     </script>
 </body>
