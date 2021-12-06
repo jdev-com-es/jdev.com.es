@@ -66,6 +66,10 @@ h2 {
     padding: 1rem;
 }
 
+.wallpaper {
+    border-radius: .5rem;
+}
+
 @media screen and (max-width: 600px) {
     .cards {
         flex-direction: column;
