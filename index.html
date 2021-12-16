@@ -20,6 +20,7 @@
     <meta name="theme-color" content="#338">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JanCraft/toolbox/dist/toolbox.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="img/favicon.png" type="image/png">
 
     <link rel="canonical" href="https://jdev.com.es/">
@@ -34,10 +35,26 @@
         </div>
 
         <div class="tbx-nav-links">
-            <a href="#team">Team</a>
-            <a href="#projects">Projects</a>
-            <a href="#games">Games</a>
-            <a href="#branding">Branding</a>
+            <a href="#team">
+                <span class="material-icons md-18">person</span>
+                Team
+            </a>
+            <a href="#projects">
+                <span class="material-icons md-18">extension</span>
+                Projects
+            </a>
+            <a href="#services">
+                <span class="material-icons md-18">dns</span>
+                Services
+            </a>
+            <a href="#games">
+                <span class="material-icons md-18">videogame_asset</span>
+                Games
+            </a>
+            <a href="#merchandising">
+                <span class="material-icons md-18">shopping_bag</span>
+                Merchandising
+            </a>
         </div>
 
         <div class="tbx-nav-right">
@@ -63,28 +80,39 @@
         </section>
 
         <section id="team">
-            <h2>Team</h2>
+            <h2>
+                <span class="material-icons">person</span>
+                Team
+            </h2>
             <div class="cards">
                 <div class="tbx-card">
+                    <img class="cut-circle" src="img/jancraft888.png" alt="jancraft888 profile" width="64" height="64"><br>
                     <h3>jancraft888</h3>
                     <p>
-                        <img class="cut-circle" src="img/jancraft888.png" alt="jancraft888 profile" width="64" height="64"><br>
                         <b>Developer & Founder</b>
                         <br><br>
-                        <a href="https://jancraft.github.io/" target="jdev-jan-portfolio">Portfolio Here!</a>
+                        <a href="https://jancraft.github.io/" target="jdev-jan-portfolio">
+                            Personal website
+                        </a>
                     </p>
                 </div>
             </div>
             <div class="cards">
-                Don't I look alone here?
-                &ThickSpace;
-                <a href="mailto:jancraft.dev@gmail.com?subject=Join the jDev Team">Wanna join?</a>
+                Hey! You may want to
+                &ThinSpace;
+                <a href="mailto:jancraft.dev@gmail.com?subject=Join the jDev Team">join us!</a>
             </div>
         </section>
         <section id="projects">
-            <h2>Projects</h2>
+            <h2>
+                <span class="material-icons">extension</span>
+                Projects
+            </h2>
             <div class="cards">
                 <div class="tbx-card" id="project-jdevgnet">
+                    <span class="material-icons md-48">
+                        router
+                    </span>
                     <h3>jDev gNET <span class="pill-green">Finished</span></h3>
                     <a href="https://github.com/jdev-com-es/jdev-gNET">GitHub Repo</a>
                     <p>
@@ -92,6 +120,9 @@
                     </p>
                 </div>
                 <div class="tbx-card" id="project-jdevquanta">
+                    <span class="material-icons md-48">
+                        lens_blur
+                    </span>
                     <h3>jDev Quanta <span class="pill-green">Finished</span></h3>
                     <a href="https://github.com/jdev-com-es/jdev-quanta">GitHub Repo</a>
                     <p>
@@ -101,6 +132,9 @@
             </div>
             <div class="cards">
                 <div class="tbx-card" id="project-jdevfuture">
+                    <span class="material-icons md-48">
+                        lens_blur
+                    </span>
                     <h3>jDev Future <span class="pill-red">Obsolete</span></h3>
                     <a href="https://github.com/jdev-com-es/jdev-future">GitHub Repo</a>
                     <p>
@@ -108,6 +142,9 @@
                     </p>
                 </div>
                 <div class="tbx-card" id="project-datasciencesuite">
+                    <span class="material-icons md-48">
+                        insights
+                    </span>
                     <h3>Data Science Suite <span class="pill-green">Finished</span></h3>
                     <a href="https://github.com/jdev-com-es/DataScienceSuite">GitHub Repo</a>
                     <p>
@@ -116,10 +153,56 @@
                 </div>
             </div>
         </section>
+        <section id="services">
+            <h2>
+                <span class="material-icons">dns</span>
+                Services
+            </h2>
+            <div class="cards">
+                <div class="tbx-card" id="service-auth">
+                    <span class="material-icons md-48">
+                        badge
+                    </span>
+                    <h3>Auth Servers <span class="pill-green">Running</span></h3>
+                    <u>https://login.jdev.com.es/</u>
+                    <p>
+                        Simple client-server authentication trusted service.
+                    </p>
+                </div>
+                <div class="tbx-card" id="service-auth">
+                    <span class="material-icons md-48">
+                        hub
+                    </span>
+                    <h3>BroadcastWS <span class="pill-green">Running</span></h3>
+                    <u>wss://bws.jdev.com.es/</u>
+                    <p>
+                        Public-facing server running BroadcastWS.
+                    </p>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="tbx-card" id="service-auth">
+                    <span class="material-icons md-48">
+                        videogame_asset
+                    </span>
+                    <h3>Game Server <span class="pill-green">Running</span></h3>
+                    <u>https://game.jdev.com.es/</u>
+                    <p>
+                        Game server used by Tedd'or.
+                    </p>
+                </div>
+            </div>
+        </section>
         <section id="games">
-            <h2>Games</h2>
+            <h2>
+                <span class="material-icons">videogame_asset</span>
+                Games
+            </h2>
             <div class="cards">
                 <div class="tbx-card" id="game-sothmars">
+                    <span class="material-icons md-48">
+                        filter_center_focus
+                    </span>
                     <h3>Sothmars <span class="pill-green">Finished</span></h3>
                     <a href="https://jdev-es.itch.io/sothmars" target="jdev-sothmars">Download</a>
                     <p>
@@ -127,6 +210,9 @@
                     </p>
                 </div>
                 <div class="tbx-card" id="game-flanker">
+                    <span class="material-icons md-48">
+                        center_focus_weak
+                    </span>
                     <h3>Flanker <span class="pill-red">Outdated</span></h3>
                     <a href="https://jdev-es.itch.io/flanker" target="jdev-flanker">Download</a>
                     <p>
@@ -136,6 +222,9 @@
             </div>
             <div class="cards">
                 <div class="tbx-card" id="game-wawary">
+                    <span class="material-icons md-48">
+                        forward
+                    </span>
                     <h3>Wawary 2 <span class="pill-green">Finished</span></h3>
                     <a href="https://jdev-es.itch.io/wawary" target="jdev-wawary">Download</a>
                     <p>
@@ -143,6 +232,9 @@
                     </p>
                 </div>
                 <div class="tbx-card" id="game-usmbeats">
+                    <span class="material-icons md-48">
+                        touch_app
+                    </span>
                     <h3>usm beats <span class="pill-green">Finished</span></h3>
                     <a href="https://jdev-es.itch.io/usm-beats" target="jdev-usmbeats">Download</a>
                     <p>
@@ -151,24 +243,29 @@
                 </div>
             </div>
         </section>
-        <section id="branding">
-            <h2>Branding</h2>
-
+        <section id="merchandising">
+            <h2>
+                <span class="material-icons">shopping_bag</span>
+                Merchandising
+            </h2>
             <div class="cards">
-                <a target="jdev-logo-300x300" download href="img/jdevlogo.svg"><img src="img/favicon.png" width="128" height="128" alt="jDev Logo" style="margin: 1rem"></a>
+                <a target="jdev-logo-300x300" download href="img/jdevlogo.svg"><img src="img/shirt.png" width="128" height="128" alt="jDev Logo" style="margin: 1rem"></a>
                 <div class="cards flex-column">
-                    <a download href="img/jdevlogo.svg">Logo (SVG, 1024x1024 view-box)</a>
+                    <a download href="img/jdevlogo.svg">Download Logo</a>
                 </div>
             </div>
             <div class="cards">
-                <img src="img/wallpaper-4k.png" alt="jDev wallpaper" width="480" class="wallpaper">
+                <img src="img/wallpaper-4k.png" alt="jDev wallpaper" width="360" class="wallpaper">
                 <div class="cards flex-column">
-                    <a download href="img/wallpaper-4k.png">Wallpaper (PNG 4k)</a>
-                    <a download href="img/wallpaper-4k-wide.png">Wallpaper (PNG 4k, for wide screens)</a>
+                    <a download href="img/wallpaper-4k.png">Download Wallpaper (4k)</a>
+                    <a download href="img/wallpaper-4k-wide.png">Download Wallpaper (4k wide)</a>
+                    <a download href="img/wallpaper-4k-thin.png">Download Wallpaper (4k thin)</a>
+                    <a download href="img/wallpaper-phone.png">Download Wallpaper (phone)</a>
                 </div>
             </div>
         </section>
     </main>
+    <br><br>
 
     <footer class="tbx-footer">
         <img src="img/favicon.png" alt="jDev" width="24" height="24">
