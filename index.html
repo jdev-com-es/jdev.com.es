@@ -17,293 +17,93 @@
     <meta name="og:site_name" content="jDev" />
     <meta name="og:description" content="Game & Software Developers" />
 
-    <meta name="theme-color" content="#338">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JanCraft/toolbox/dist/toolbox.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="shortcut icon" href="img/favicon.png" type="image/png">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
     <link rel="canonical" href="https://jdev.com.es/">
+    <link rel="stylesheet" href="/css/style.css">
 
     <title>jDev ES</title>
 </head>
-<body class="tbx-dark">
-    <nav role="navigation" class="tbx-nav">
-        <div class="tbx-nav-brand">
-            <a href="/"><img src="img/favicon.png" alt="jDev" width="32" height="32"></a>
-            <h1>jDev ES</h1>
+<body>
+    <header></header>
+
+    <section>
+        <img src="/img/favicon.png" alt="jDev ES" width="64" height="64">
+        <p>
+            We build tools, services and games for free because the world needs more free things.
+        </p>
+    </section>
+    <section class="pale-blue">
+        <div class="wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
 
-        <div class="tbx-nav-links">
-            <a href="#team">
-                <span class="material-icons md-18">person</span>
-                Team
-            </a>
-            <a href="#projects">
-                <span class="material-icons md-18">extension</span>
-                Projects
-            </a>
-            <a href="#services">
-                <span class="material-icons md-18">dns</span>
-                Services
-            </a>
-            <a href="#games">
-                <span class="material-icons md-18">videogame_asset</span>
-                Games
-            </a>
-            <a href="#merchandising">
-                <span class="material-icons md-18">shopping_bag</span>
-                Merchandising
-            </a>
+        <h1>Team</h1>
+        <p>
+            We are a small team, you can <a target="jdev-join-mail" href="mailto:membership@jdev.com.es?subject=Join%20the%20jDev%20Team&body=I%20think%20I%20should%20join%20jDev%20because...">ask to join</a> if you want to!
+        </p>
+        <br>
+        <a class="nolink" target="jdev-jancraft" href="https://jancraft.github.io/">
+            <img src="/img/jancraft888.png" alt="" width="64" height="64">
+        </a>
+        <a target="jdev-github-jancraft" href="https://github.com/JanCraft/">@JanCraft</a>
+        <br>        
+        <img src="/img/enderblaze333.png" alt="" width="64" height="64">
+        <a target="jdev-github-enderblaze333" href="https://github.com/enderblaze333">@enderblaze333</a>
+    </section>
+    <section>
+        <div class="wave-layered">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
         </div>
-
-        <div class="tbx-nav-right">
-            <button class="tbx-btn" onclick="tbx('body').toggleClass('tbx-dark');savedark()">Dark/Light</button>
-            <a class="tbx-btn svgp" target="jdev-itch" href="https://jdev-es.itch.io/"><img class="svg" src="img/itchio-logo.svg" alt="itch.io page" width="24" height="24"></a>
-            <a class="tbx-btn svgp" target="jdev-github" href="https://github.com/jdev-com-es/"><img class="svg" src="img/GitHub-Mark.svg" alt="GitHub" width="24" height="24"></a>
-        </div>
-        <div class="tbx-nav-collapser tbx-nav-right">
-            <button class="tbx-btn" onclick="tbx.navcollapse()">☰</button>
-        </div>
-    </nav>
-    <br><br><br>
-
-    <main role="main">
-        <section id="some-words">
-            <h3><q>
-                If something helps you, it probably also helps others.<br>
-                Keeping secrets to yourself doesn't harm others yet it doesn't help them either.<br>
-                If the possibility is there, Open-Source, if the possibility is there, Free-of-Charge. </q>
-                <br><br>
-                - JanCraft, jDev Founder, 2016
-            </h3>
-        </section>
-
-        <section id="team">
-            <h2>
-                <span class="material-icons">person</span>
-                Team
-            </h2>
-            <div class="cards">
-                <div class="tbx-card">
-                    <img class="cut-circle" src="img/jancraft888.png" alt="jancraft888 profile" width="64" height="64"><br>
-                    <h3>jancraft888</h3>
-                    <p>
-                        <b>Developer & Founder</b>
-                        <br><br>
-                        <a href="https://jancraft.github.io/" target="jdev-jan-portfolio">
-                            Personal website
-                        </a>
-                    </p>
-                </div>
-                <div class="tbx-card">
-                    <img class="cut-circle" src="img/enderblaze333.png" alt="enderblaze333 profile" width="64" height="64"><br>
-                    <h3>enderblaze333</h3>
-                    <p>
-                        <b>Plot Writer & Beta tester</b>
-                    </p>
-                </div>
-            </div>
-            <div class="cards">
-                Hey! You may want to
-                &ThinSpace;
-                <a href="mailto:jancraft.dev@gmail.com?subject=Join the jDev Team">join us!</a>
-            </div>
-        </section>
-        <section id="projects">
-            <h2>
-                <span class="material-icons">extension</span>
-                Projects
-            </h2>
-            <div class="cards">
-                <div class="tbx-card" id="project-jdevgnet">
-                    <span class="material-icons md-48">
-                        router
-                    </span>
-                    <h3>jDev gNET <span class="pill-red">Obsolete</span></h3>
-                    <a href="https://github.com/jdev-com-es/jdev-gNET">GitHub Repo</a>
-                    <p>
-                        Secure peer-to-peer-like server platform for videogames.
-                    </p>
-                </div>
-                <div class="tbx-card" id="project-jdevquanta">
-                    <span class="material-icons md-48">
-                        lens_blur
-                    </span>
-                    <h3>jDev Quanta <span class="pill-green">Stable</span></h3>
-                    <a href="https://github.com/jdev-com-es/jdev-quanta">GitHub Repo</a>
-                    <p>
-                        New quantum superposition and computing engine for Python. Supporting bigger superpositions.
-                    </p>
-                </div>
-            </div>
-            <div class="cards">
-                <div class="tbx-card" id="project-jdevfuture">
-                    <span class="material-icons md-48">
-                        lens_blur
-                    </span>
-                    <h3>jDev Future <span class="pill-red">Obsolete</span></h3>
-                    <a href="https://github.com/jdev-com-es/jdev-future">GitHub Repo</a>
-                    <p>
-                        Old quantum superposition and computing engine for Python.
-                    </p>
-                </div>
-                <div class="tbx-card" id="project-datasciencesuite">
-                    <span class="material-icons md-48">
-                        insights
-                    </span>
-                    <h3>Data Science Suite <span class="pill-green">Stable</span></h3>
-                    <a href="https://github.com/jdev-com-es/DataScienceSuite">GitHub Repo</a>
-                    <p>
-                        Text learning & generation AI platform for Python.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <section id="services">
-            <h2>
-                <span class="material-icons">dns</span>
-                Services
-            </h2>
-            <div class="cards">
-                <div class="tbx-card" id="service-auth">
-                    <span class="material-icons md-48">
-                        badge
-                    </span>
-                    <h3>Auth Servers <span class="pill-green">Running</span></h3>
-                    <u>https://login.jdev.com.es/</u>
-                    <p>
-                        Simple client-server authentication trusted service.
-                    </p>
-                </div>
-                <div class="tbx-card" id="service-auth">
-                    <span class="material-icons md-48">
-                        hub
-                    </span>
-                    <h3>BroadcastWS <span class="pill-green">Running</span></h3>
-                    <u>wss://relay.jdev.com.es/</u>
-                    <p>
-                        Public-facing server running BroadcastWS.
-                    </p>
-                </div>
-            </div>
-            <div class="cards">
-                <div class="tbx-card" id="service-auth">
-                    <span class="material-icons md-48">
-                        videogame_asset
-                    </span>
-                    <h3>Game Server <span class="pill-green">Running</span></h3>
-                    <u>https://game.jdev.com.es/</u>
-                    <p>
-                        Game server used by Tedd'or.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <section id="games">
-            <h2>
-                <span class="material-icons">videogame_asset</span>
-                Games
-            </h2>
-            <div class="cards">
-                <div class="tbx-card" id="game-sothmars">
-                    <span class="material-icons md-48">
-                        filter_center_focus
-                    </span>
-                    <h3>Sothmars <span class="pill-green">Stable</span></h3>
-                    <a href="https://jdev-es.itch.io/sothmars" target="jdev-sothmars">Download</a>
-                    <p>
-                        Simple prototyped First Person Shooter.
-                    </p>
-                </div>
-                <div class="tbx-card" id="game-flanker">
-                    <span class="material-icons md-48">
-                        center_focus_weak
-                    </span>
-                    <h3>Flanker <span class="pill-red">Outdated</span></h3>
-                    <a href="https://jdev-es.itch.io/flanker" target="jdev-flanker">Download</a>
-                    <p>
-                        First Person Shooter like CS:GO.
-                    </p>
-                </div>
-            </div>
-            <div class="cards">
-                <div class="tbx-card" id="game-wawary">
-                    <span class="material-icons md-48">
-                        forward
-                    </span>
-                    <h3>Wawary 2 <span class="pill-green">Stable</span></h3>
-                    <a href="https://jdev-es.itch.io/wawary" target="jdev-wawary">Download</a>
-                    <p>
-                        One-button innovative rythm game.
-                    </p>
-                </div>
-                <div class="tbx-card" id="game-usmbeats">
-                    <span class="material-icons md-48">
-                        touch_app
-                    </span>
-                    <h3>usm beats <span class="pill-green">Stable</span></h3>
-                    <a href="https://jdev-es.itch.io/usm-beats" target="jdev-usmbeats">Download</a>
-                    <p>
-                        Innovative clicker rythm game.
-                    </p>
-                </div>
-            </div>
-            <div class="cards">
-                <div class="tbx-card" id="game-teddor">
-                    <span class="material-icons md-48">
-                        view_in_ar
-                    </span>
-                    <h3>Tedd'or <span class="pill-green">Stable</span></h3>
-                    <a href="https://jdev-es.itch.io/teddor" target="jdev-teddor">Download</a>
-                    <p>
-                        Open-world adventure game.
-                        <br>(by jancraft888)
-                    </p>
-                </div>
-                <div class="tbx-card" id="game-teddorsubmerged">
-                    <span class="material-icons md-48">
-                        question_mark
-                    </span>
-                    <h3>#!@? <span class="pill-yellow">2022</span></h3>
-                    <a href="#">Coming soon</a>
-                    <p>
-                        The game will be announced in spring 2022.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <section id="merchandising">
-            <h2>
-                <span class="material-icons">shopping_bag</span>
-                Merchandising
-            </h2>
-            <div class="cards">
-                <a target="jdev-logo-300x300" download href="img/jdevlogo.svg"><img src="img/shirt.png" width="128" height="128" alt="jDev Logo" style="margin: 1rem"></a>
-                <div class="cards flex-column">
-                    <a download href="img/jdevlogo.svg">Download Logo</a>
-                </div>
-            </div>
-            <div class="cards">
-                <img src="img/wallpaper-4k.png" alt="jDev wallpaper" width="360" class="wallpaper">
-                <div class="cards flex-column">
-                    <a download href="img/wallpaper-4k.png">Download Wallpaper (4k)</a>
-                    <a download href="img/wallpaper-4k-wide.png">Download Wallpaper (4k wide)</a>
-                    <a download href="img/wallpaper-4k-thin.png">Download Wallpaper (4k thin)</a>
-                    <a download href="img/wallpaper-phone.png">Download Wallpaper (phone)</a>
-                </div>
-            </div>
-        </section>
-    </main>
-    <br><br>
-
-    <footer class="tbx-footer">
-        <img src="img/favicon.png" alt="jDev" width="24" height="24">
-        &ThickSpace;
-        Made with ❤️ by jDev ES
+        <br>
+        
+        <h1>Tools</h1>
+        <p>
+            We build tools for developers, some of our tools are listed here, some are in our <a target="jdev-github" href="https://github.com/jdev-com-es/">GitHub</a>, some are in <a target="jdev-github-jancraft" href="https://github.com/JanCraft/">JanCraft's GitHub</a>.
+            <br><br>
+            If you need us to build a new tool for you, you can <a target="jdev-build-mail" href="mailto:ideas@jdev.com.es">ask us</a> to build it for you.
+        </p>
+    </section>
+    <div class="spacer layer1"></div>
+    <section class="blue">
+        <h1>Services</h1>
+        <p>
+            We run services for developers publically and free-of-charge.
+            <br><br>
+            BroadcastWS instance at <u>wss://relay.jdev.com.es/</u>
+            <br><br>
+            Authentication servers at <u>https://login.jdev.com.es/</u>
+            <br><br>
+            jDev Game servers at <u>https://game.jdev.com.es/</u>
+        </p>
+    </section>
+    <div class="spacer layer2"></div>
+    <section class="red">
+        <h1>Games</h1>
+        <p>
+            We also love making and playing games, you can find them in our <a target="jdev-itchio" href="https://jdev-es.itch.io/">itch.io page</a>.
+            <br>
+            <br>
+            <ul>
+                <li><b>Sothmars</b> Simple prototyped FPS</li>
+                <li><b>Wawary 2</b> One-button rythm game</li>
+                <li><b>usm beats</b> Mouse rythm game</li>
+                <li><b>Tedd'or</b> Open-world adventure game</li>
+                <li><b>#!@?</b> Coming soon in 2022</li>
+            </ul>
+        </p>
+    </section>
+    <div class="spacer layer3"></div>
+    <footer>
+        Made with ❤️ by jDev
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/gh/JanCraft/toolbox/dist/toolbox.min.js"></script>
-    <script src="js/controller.js"></script>
 </body>
 </html>
