@@ -40,7 +40,7 @@
             </svg>
         </div>
 
-        <h1>Coming up...</h1>
+        <h1>Event Video</h1>
         <div id="countdown">
             huh... no events here yet?
         </div>
@@ -55,8 +55,13 @@
         </div>
         <br>
         
-        <h1>Previous Events</h1>
-        <p>This is looking empty, hope we can fill it up soon!</p>
+        <h1>Previous Videos</h1>
+        <div class="videogrid">
+            <iframe width="720" height="640" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src="https://www.youtube.com/embed/BtNq7xPpuoU"></iframe>
+            <iframe width="720" height="640" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src="https://www.youtube.com/embed/6l_gy84CPhU"></iframe>
+            <iframe width="720" height="640" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src="https://www.youtube.com/embed/2Cslp6cRNUo"></iframe>
+            <iframe width="720" height="640" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src="https://www.youtube.com/embed/vNV9UTikmdY"></iframe>
+        </div>
     </section>
     <footer>
         Made with ❤️ by jDev
@@ -65,14 +70,14 @@
     <script>
         const countdown = document.getElementById('countdown');
         const next_date = Date.parse("12 March 2022 17:00:00 GMT+1");
-        const next_link = "https://jdev.com.es/";
+        const next_link = "https://www.youtube.com/embed/DGvwzONxv4U?autoplay=1";
         
         let intv = setInterval(() => {
             const now = Date.now();
             const distance = next_date - now;
-            
+
             if (distance < 0) {
-                countdown.innerHTML = `<iframe style="border:0" src="${next_link}"></iframe>`;
+                countdown.innerHTML = `<iframe width="560" height="315" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src="${next_link}"></iframe>`;
                 clearInterval(intv);
             } else {
                 let days = Math.floor(distance / (1000 * 60 * 60 * 24));

@@ -93,3 +93,14 @@ footer {
 .spacer.layer3 {
     background-image: url("/svg/stacked-steps-haikei.svg");
 }
+
+.videogrid {
+    display: flex;
+    flex-wrap: wrap;
+}
+.videogrid iframe {
+    margin: 1rem;
+    width: calc(50% - 2rem);
+    height: auto;
+    flex-grow: 1/4;
+}
