@@ -102,5 +102,19 @@ footer {
     margin: 1rem;
     width: calc(50% - 2rem);
     height: auto;
-    flex-grow: 1/4;
+}
+
+@media only screen and (max-width: 600px) {
+    .videogrid iframe {
+        width: calc(100% - 2rem);
+    }
+
+    section {
+        padding: 50px 5vw;
+    }
+
+    .eventvideo {
+        width: 100%;
+        height: auto;
+    }
 }
