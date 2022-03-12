@@ -76,7 +76,7 @@
             const now = Date.now();
             const distance = next_date - now;
 
-            if (distance > 0) {
+            if (distance < 0) {
                 countdown.innerHTML = `<iframe class="eventvideo" width="560" height="315" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src="${next_link}"></iframe>`;
                 clearInterval(intv);
             } else {
