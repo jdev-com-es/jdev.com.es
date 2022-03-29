@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jDev Auth</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDAi5RDkUobTnHlG1havq4sMoLtx7n56GA",
+            authDomain: "jdev-es.firebaseapp.com",
+            projectId: "jdev-es",
+            storageBucket: "jdev-es.appspot.com",
+            messagingSenderId: "349270684759",
+            appId: "1:349270684759:web:111d930acf0a8126bc1f12",
+            measurementId: "G-RNGXE47XYV"
+        };
+        
+        const app = firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .dialog {
+            background-color: #fff;
+            color: #000;
+            border-radius: .15rem;
+            padding: .5rem;
+        }
+        .cbtn {
+            background: #ccc;
+            color: #000;
+            padding: .25rem;
+            border: .1rem solid black;
+            border-radius: .25rem;
+            cursor: pointer;
+        }
+        .cbtn:hover {
+            background: #aaa;
+        }
+        .cbtn:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <script>
+        const urlparams = new URLSearchParams(location.search);
+
+        const uiConfig = {
+            signInSuccessUrl: '/auth/code',
+            signInOptions: [
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                {
+                    provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                    requireDisplayName: false
+                },
+            ],
+            signInFlow: 'popup',
+            tosUrl: '/tos',
+            privacyPolicyUrl: '/privacy',
+            callbacks: {
+                signInSuccessWithAuthResult(authResult) {
+                    let user = authResult.user;
+                    let credential = authResult.credential;
+                    let isNewUser = authResult.additionalUserInfo.isNewUser;
+                    let providerId = authResult.additionalUserInfo.providerId;
+                    let operationType = authResult.operationType;
+
+                    console.log({ user, credential, isNewUser, providerId, operationType });
+                    if (isNewUser && !user.emailVerified) {
+                        user.sendEmailVerification();
+                    }
+
+                    if (urlparams.get('redirect')) {
+                        (async function() {
+                            const url = new URL(urlparams.get('redirect'));
+                            url.search = `?jdevauth=true&jdevauth_id_token=${await user.auth.currentUser.getIdToken()}&jdevauth_uid=${user.uid}`;
+                            document.querySelector('#redirect-str').textContent = "Redirecting...";
+                            location.assign(url);
+                        })();
+                    } else if (urlparams.get('bwscode')) {
+                        document.querySelector('#redirect-str').textContent = "Connecting to bws...";
+                        const ws = new WebSocket("wss://relay.jdev.com.es/");
+                        ws.addEventListener('open', async ev => {
+                            ws.send(JSON.stringify({ clientID: Array.from(crypto.getRandomValues(new Uint8Array(32)))
+    .map(b => b.toString(16).padStart(2, '0')).join(''), listens: [
+                                'jdev-es:auth/' + urlparams.get('bwscode')
+                            ] }));
+                            ws.send(JSON.stringify({
+                                event: 'jdev-es:auth/' + urlparams.get('bwscode'),
+                                id_token: await user.auth.currentUser.getIdToken(),
+                                uid: user.uid
+                            }));
+                            document.querySelector('#redirect-str').textContent = "Authenticating application with bws...";
+                            setTimeout(() => {
+                                ws.close();
+                                document.querySelector('#redirect-str').innerHTML = "Authenticating application with bws...<br><br>You can go back to your application now";
+                            }, 2500);
+                        });
+                    } else {
+                        document.querySelector('#controls').hidden = false;
+                        document.querySelector('#c-resetpasswd').onclick = () => {
+                            document.querySelector('#c-resetpasswd').disabled = true;
+
+                            firebase.auth().sendPasswordResetEmail(user.email);
+                        };
+                        document.querySelector('#c-chngemail').onclick = () => {
+                            const email = prompt("Input your new email");
+                            if (confirm(`Do you want to change your account email to "${email}"?`)) {
+                                document.querySelector('#c-chngemail').disabled = true;
+                                user.updateEmail(email);
+                            }
+                        };
+                        document.querySelector('#c-deleteacc').onclick = () => {
+                            if (confirm("Are you sure you want to delete your account?")) {
+                                if (confirm("This change is irreversible and will delete all you data. Do you want to delete your account?")) {
+                                    document.querySelector('#c-deleteacc').disabled = true;
+                                    user.delete();
+
+                                    setTimeout(location.reload, 1000);
+                                }
+                            }
+                        };
+                    }
+                },
+            }
+        };
+
+        const ui = new firebaseui.auth.AuthUI(firebase.auth());
+        ui.disableAutoSignIn();
+        ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+</head>
+<body>
+    <section>
+        <img src="/img/favicon.png" alt="jDev ES">
+        <br>
+
+        <div id="firebaseui-auth-container"></div>
+        <div id="redirect-str"></div>
+
+        <div id="controls" class="dialog" hidden>
+            <button id="c-resetpasswd" class="cbtn">Reset password</button>
+            <button id="c-chngemail" class="cbtn">Change email</button>
+            <button id="c-deleteacc" class="cbtn">Delete account</button>
+        </div>
+    </section>
+</body>
+</html>
