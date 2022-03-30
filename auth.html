@@ -66,6 +66,9 @@
             tosUrl: '/tos',
             privacyPolicyUrl: '/privacy',
             callbacks: {
+                signInFailed(error) {
+                    alert(JSON.stringify(error));
+                },
                 signInSuccessWithAuthResult(authResult) {
                     let user = authResult.user;
                     let credential = authResult.credential;
