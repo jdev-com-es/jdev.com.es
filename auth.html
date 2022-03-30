@@ -23,8 +23,10 @@
         const app = firebase.initializeApp(firebaseConfig);
     </script>
     <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+    <script src="/js/dialog-polyfill.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dialog-polyfill.css">
     <style>
         .dialog {
             background-color: #fff;
@@ -32,31 +34,45 @@
             border-radius: .15rem;
             padding: .5rem;
         }
-        .cbtn {
-            background: #ccc;
-            color: #000;
-            padding: .25rem;
-            border: .1rem solid black;
-            border-radius: .25rem;
-            cursor: pointer;
+        .dialog > * {
+            margin-bottom: .25rem;
         }
-        .cbtn:hover {
-            background: #aaa;
+
+        .arl-box {
+            display: flex;
+            flex-direction: column;
         }
-        .cbtn:disabled {
-            background: #999;
-            cursor: not-allowed;
+
+        .arl-account {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .arl-account > * {
+            margin: .5rem;
+        }
+
+        .arl-names {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .arl-other {
+            margin: 1rem;
         }
     </style>
 
     <script>
         const urlparams = new URLSearchParams(location.search);
+        const validateEmail = x => String(x).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
         const uiConfig = {
             signInSuccessUrl: '/auth/code',
             signInOptions: [
-                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                {
+                    provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    requireDisplayName: false
+                },
                 {
                     provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
                     requireDisplayName: false
@@ -66,9 +82,8 @@
             tosUrl: '/tos',
             privacyPolicyUrl: '/privacy',
             callbacks: {
-                async signInFailure(error) {
-                    alert("Error: ");
-                    alert(error.code);
+                signInFailure(error) {
+                    console.error(error);
                 },
                 signInSuccessWithAuthResult(authResult) {
                     let user = authResult.user;
@@ -82,67 +97,119 @@
                         user.sendEmailVerification();
                     }
 
-                    if (urlparams.get('redirect')) {
-                        (async function() {
-                            const url = new URL(urlparams.get('redirect'));
-                            url.search = `?jdevauth=true&jdevauth_id_token=${await user.auth.currentUser.getIdToken()}&jdevauth_uid=${user.uid}`;
-                            document.querySelector('#redirect-str').textContent = "Redirecting...";
-                            location.assign(url);
-                        })();
-                    } else if (urlparams.get('bwscode')) {
-                        document.querySelector('#redirect-str').textContent = "Connecting to bws...";
-                        const ws = new WebSocket("wss://relay.jdev.com.es/");
-                        ws.addEventListener('open', async ev => {
-                            ws.send(JSON.stringify({ clientID: Array.from(crypto.getRandomValues(new Uint8Array(32)))
-    .map(b => b.toString(16).padStart(2, '0')).join(''), listens: [
-                                'jdev-es:auth/' + urlparams.get('bwscode')
-                            ] }));
-                            ws.send(JSON.stringify({
-                                event: 'jdev-es:auth/' + urlparams.get('bwscode'),
-                                id_token: await user.auth.currentUser.getIdToken(),
-                                uid: user.uid
-                            }));
-                            document.querySelector('#redirect-str').textContent = "Authenticating application with bws...";
-                            setTimeout(() => {
-                                ws.close();
-                                document.querySelector('#redirect-str').innerHTML = "Authenticating application with bws...<br><br>You can go back to your application now";
-                            }, 2500);
-                        });
-                    } else {
-                        document.querySelector('#controls').hidden = false;
-                        document.querySelector('#c-resetpasswd').onclick = () => {
-                            document.querySelector('#confirm-passwd-reset').showModal();
-                        };
-                        document.querySelector('#c-chngemail').onclick = () => {
-                            const email = prompt("Input your new email");
-                            if (confirm(`Do you want to change your account email to "${email}"?`)) {
-                                document.querySelector('#c-chngemail').disabled = true;
-                                user.updateEmail(email);
-                            }
-                        };
-                        document.querySelector('#c-deleteacc').onclick = () => {
-                            if (confirm("Are you sure you want to delete your account?")) {
-                                if (confirm("This change is irreversible and will delete all you data. Do you want to delete your account?")) {
-                                    document.querySelector('#c-deleteacc').disabled = true;
-                                    user.delete();
-
-                                    setTimeout(location.reload, 1000);
-                                }
-                            }
-                        };
-                    }
+                    perform_sign_in(user);
                 },
             }
         };
 
-        function reset_password() {
+        function perform_sign_in(user) {
+            if (urlparams.get('redirect')) {
+                (async function() {
+                    const url = new URL(urlparams.get('redirect'));
+                    url.search = `?jdevauth=true&jdevauth_id_token=${await user.auth.currentUser.getIdToken()}&jdevauth_uid=${user.uid}`;
+                    document.querySelector('#redirect-str').textContent = "Redirecting...";
+                    location.assign(url);
+                })();
+            } else if (urlparams.get('bwscode')) {
+                document.querySelector('#redirect-str').textContent = "Connecting to bws...";
+                const ws = new WebSocket("wss://relay.jdev.com.es/");
+                ws.addEventListener('open', async ev => {
+                    ws.send(JSON.stringify({ clientID: Array.from(crypto.getRandomValues(new Uint8Array(32)))
+.map(b => b.toString(16).padStart(2, '0')).join(''), listens: [
+                        'jdev-es:auth/' + urlparams.get('bwscode')
+                    ] }));
+                    ws.send(JSON.stringify({
+                        event: 'jdev-es:auth/' + urlparams.get('bwscode'),
+                        id_token: await user.auth.currentUser.getIdToken(),
+                        uid: user.uid
+                    }));
+                    document.querySelector('#redirect-str').textContent = "Authenticating application with bws...";
+                    setTimeout(() => {
+                        ws.close();
+                        document.querySelector('#redirect-str').innerHTML = "Authenticating application with bws...<br><br>You can go back to your application now";
+                    }, 2500);
+                });
+            } else {
+                document.querySelector('#controls').hidden = false;
+                document.querySelector('#c-resetpasswd').onclick = () => {
+                    const el = document.querySelector('#confirm-passwd-reset');
+                    if (!el.showModal) dialogPolyfill.registerDialog(dialog);
+                    el.showModal();
+                };
+                document.querySelector('#c-chngemail').onclick = () => {
+                    const email = firebase.auth().currentUser.email;
+                    const validate = () => {
+                        const current_is_correct = document.querySelector('#acc-chngemail-current').value == email;
+                        const new_is_valid = validateEmail(document.querySelector('#acc-chngemail-new').value);
+                        document.querySelector('#acc-chngemail-btn').disabled = !(current_is_correct && new_is_valid);
+                    };
+                    document.querySelector('#acc-chngemail-current').onkeyup = validate;
+                    document.querySelector('#acc-chngemail-new').onkeyup = validate;
+
+                    document.querySelector('#acc-chngemail').showModal();
+                };
+                document.querySelector('#c-deleteacc').onclick = () => {
+                    const email = firebase.auth().currentUser.email;
+                    document.querySelector('#acc-delete-email').onkeyup = () => {
+                        document.querySelector('#acc-delete-btn').disabled = !(document.querySelector('#acc-delete-email').value == email);
+                    };
+                    document.querySelector('#confirm-acc-delete').showModal();
+                };
+            }
+        }
+
+        function transfer_account() {
+            const newEmail = document.querySelector("#acc-chngemail-new").value;
+            firebase.auth().currentUser.updateEmail(newEmail);
+            close_dialog("#acc-chngemail");
+            document.querySelector('#c-chngemail').disabled = true;
+            setTimeout(() => location.reload(), 1000);
+        }
+
+        function close_dialog(selector) {
+            const el = document.querySelector(selector);
+            if (!el.close) dialogPolyfill.registerDialog(dialog);
+            el.close();
+        }
+
+        function reset_password(email) {
             document.querySelector('#c-resetpasswd').disabled = true;
-            firebase.auth().sendPasswordResetEmail(user.email);
+            close_dialog('#confirm-passwd-reset');
+            firebase.auth().sendPasswordResetEmail(email || firebase.auth().currentUser.email);
+        }
+
+        function delete_account() {
+            document.querySelector('#c-deleteacc').disabled = true;
+            close_dialog('#confirm-acc-delete');
+            firebase.auth().currentUser.delete();
+            setTimeout(() => location.reload(), 1000);
         }
 
         const ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.disableAutoSignIn();
-        ui.start('#firebaseui-auth-container', uiConfig);
+        let firstAuth = true;
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!firstAuth) return;
+            firstAuth = false;
+
+            if (!user) ui.start('#firebaseui-auth-container', uiConfig);
+            else {
+                document.querySelector('#already-login-pfp').src = user.photoURL;
+                document.querySelector('#already-login-name').textContent = user.displayName;
+                document.querySelector('#already-login-email').textContent = user.email;
+                document.querySelector('#already-login').style.display = 'flex';
+            }
+        });
+
+        function arl_other_action() {
+            document.querySelector('#already-login').style.display = 'none';
+            ui.start('#firebaseui-auth-container', uiConfig);
+        }
+
+        function arl_account_action() {
+            document.querySelector('#already-login').style.display = 'none';
+            perform_sign_in(firebase.auth().currentUser);
+        }
     </script>
 </head>
 <body>
@@ -151,20 +218,76 @@
         <br>
 
         <div id="firebaseui-auth-container"></div>
+        <div id="already-login" style="display:none" class="arl-box dialog">
+            <div class="arl-account">
+                <img style="border-radius:100%" width="32" height="32" src="/img/anon_user.png" alt="" id="already-login-pfp" onerror="this.onerror=null;this.src='/img/anon_user.png'">
+                <div class="arl-names">
+                    <p id="already-login-name"></p>
+                    <small id="already-login-email"></small>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="arl_account_action()">Use</button>
+            </div>
+            <br>
+            <div class="arl-other">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="arl_other_action()">Use another account</button>
+            </div>
+        </div>
         <div id="redirect-str"></div>
 
         <div id="controls" class="dialog" hidden>
             <button id="c-resetpasswd" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Reset password</button>
-            <button id="c-chngemail" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Change email</button>
+            <button id="c-chngemail" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Transfer email</button>
             <button id="c-deleteacc" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete account</button>
         </div>
     </section>
 
     <dialog class="mdl-dialog" id="confirm-passwd-reset">
-        <h4 class="mdl-dialog__title">Do you want to reset your password?</h4>
+        <div class="mdl-dialog__content">
+            <p>
+              Do you want to reset your password?
+              <br>
+              You will receive an email with a link to proceed
+            </p>
+          </div>
         <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button" onclick="reset_password()">Yes</button>
-            <button type="button" class="mdl-button close">No</button>
+            <button type="button" class="mdl-button mdl-button--raised mdl-button--accent" onclick="reset_password()">Reset</button>
+            <button type="button" class="mdl-button mdl-button--raised mdl-button--colored close" onclick="close_dialog('#confirm-passwd-reset')">Cancel</button>
+        </div>
+    </dialog>
+    <dialog class="mdl-dialog" id="confirm-acc-delete">
+        <div class="mdl-dialog__content">
+            <p>
+              Do you <b>really</b> want to delete your account?
+              <br>
+              This action will <i>permanently remove</i> all your user data from our servers.
+            </p>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="email" id="acc-delete-email" autocomplete="off">
+                <label class="mdl-textfield__label" for="acc-delete-email">Email Address</label>
+            </div>
+          </div>
+        <div class="mdl-dialog__actions">
+            <button id="acc-delete-btn" type="button" class="mdl-button mdl-button--raised mdl-button--accent" onclick="delete_account()" disabled>Delete</button>
+            <button type="button" class="mdl-button mdl-button--raised mdl-button--colored close" onclick="close_dialog('#confirm-acc-delete')">Cancel</button>
+        </div>
+    </dialog>
+    <dialog class="mdl-dialog" id="acc-chngemail">
+        <div class="mdl-dialog__content">
+            <p>
+                Transferring your account to another email address will remove access to your account through the email address currently associated with it.
+            </p>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="email" id="acc-chngemail-current" autocomplete="off">
+                <label class="mdl-textfield__label" for="acc-chngemail-current">Current Email Address</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="email" id="acc-chngemail-new" autocomplete="off">
+                <label class="mdl-textfield__label" for="acc-chngemail-new">New Email Address</label>
+            </div>
+          </div>
+        <div class="mdl-dialog__actions">
+            <button id="acc-chngemail-btn" type="button" class="mdl-button mdl-button--raised mdl-button--accent" onclick="transfer_account()" disabled>Transfer</button>
+            <button type="button" class="mdl-button mdl-button--raised mdl-button--colored close" onclick="close_dialog('#acc-chngemail')">Cancel</button>
         </div>
     </dialog>
 </body>
