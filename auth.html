@@ -67,6 +67,7 @@
             privacyPolicyUrl: '/privacy',
             callbacks: {
                 async signInFailure(error) {
+                    alert("Error: ");
                     alert(error.code);
                 },
                 signInSuccessWithAuthResult(authResult) {
