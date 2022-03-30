@@ -111,9 +111,7 @@
                     } else {
                         document.querySelector('#controls').hidden = false;
                         document.querySelector('#c-resetpasswd').onclick = () => {
-                            document.querySelector('#c-resetpasswd').disabled = true;
-
-                            firebase.auth().sendPasswordResetEmail(user.email);
+                            document.querySelector('#confirm-passwd-reset').showModal();
                         };
                         document.querySelector('#c-chngemail').onclick = () => {
                             const email = prompt("Input your new email");
@@ -137,6 +135,11 @@
             }
         };
 
+        function reset_password() {
+            document.querySelector('#c-resetpasswd').disabled = true;
+            firebase.auth().sendPasswordResetEmail(user.email);
+        }
+
         const ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.disableAutoSignIn();
         ui.start('#firebaseui-auth-container', uiConfig);
@@ -156,5 +159,13 @@
             <button id="c-deleteacc" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete account</button>
         </div>
     </section>
+
+    <dialog class="mdl-dialog" id="confim-passwd-reset">
+        <h4 class="mdl-dialog__title">Do you want to reset your password?</h4>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button" onclick="reset_password()">Yes</button>
+            <button type="button" class="mdl-button close">No</button>
+        </div>
+    </dialog>
 </body>
 </html>
