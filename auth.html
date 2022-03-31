@@ -130,6 +130,10 @@
                     }, 2500);
                 });
             } else {
+                document.querySelector('#acc-pfp').src = user.photoURL;
+                document.querySelector('#acc-name').textContent = user.displayName || user.email.substr(0, user.email.indexOf('@'));
+                document.querySelector('#acc-email').textContent = user.email;
+
                 document.querySelector('#controls').hidden = false;
                 document.querySelector('#c-resetpasswd').onclick = () => {
                     const el = document.querySelector('#confirm-passwd-reset');
@@ -195,7 +199,7 @@
             if (!user) ui.start('#firebaseui-auth-container', uiConfig);
             else {
                 document.querySelector('#already-login-pfp').src = user.photoURL;
-                document.querySelector('#already-login-name').textContent = user.displayName;
+                document.querySelector('#already-login-name').textContent = user.displayName || user.email.substr(0, user.email.indexOf('@'));
                 document.querySelector('#already-login-email').textContent = user.email;
                 document.querySelector('#already-login').style.display = 'flex';
             }
@@ -235,6 +239,15 @@
         <div id="redirect-str"></div>
 
         <div id="controls" class="dialog" hidden>
+            <div class="arl-account">
+                <img style="border-radius:100%" width="32" height="32" src="/img/anon_user.png" alt="" id="acc-pfp" onerror="this.onerror=null;this.src='/img/anon_user.png'">
+                <div class="arl-names">
+                    <p id="acc-name"></p>
+                    <small id="acc-email"></small>
+                </div>
+            </div>
+            <br>
+
             <button id="c-resetpasswd" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Reset password</button>
             <button id="c-chngemail" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Transfer email</button>
             <button id="c-deleteacc" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Delete account</button>
