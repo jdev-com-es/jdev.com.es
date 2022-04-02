@@ -60,6 +60,8 @@
         .arl-other {
             margin: 1rem;
         }
+
+        #redirect-str { text-align: center }
     </style>
 
     <script>
@@ -126,8 +128,8 @@
                     document.querySelector('#redirect-str').textContent = "Authenticating application with bws...";
                     setTimeout(() => {
                         ws.close();
-                        document.querySelector('#redirect-str').innerHTML = "Authenticating application with bws...<br><br>You can go back to your application now";
-                    }, 2500);
+                        document.querySelector('#redirect-str').innerHTML = "Authenticating application with bws...<br><br><h2>You can go back to your application now</h2>";
+                    }, 1500);
                 });
             } else {
                 document.querySelector('#acc-pfp').src = user.photoURL;
