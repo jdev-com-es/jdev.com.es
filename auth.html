@@ -108,7 +108,11 @@
             if (urlparams.get('redirect')) {
                 (async function() {
                     const url = new URL(urlparams.get('redirect'));
-                    url.search = `?jdevauth=true&jdevauth_id_token=${await user.auth.currentUser.getIdToken()}&jdevauth_uid=${user.uid}`;
+                    const params = url.searchParams;
+                    params.set('jdevauth', 'true');
+                    params.set('jdevauth_id_token', await user.auth.currentUser.getIdToken());
+                    params.set('jdevauth_uid', user.uid);
+                    url.search = params.toString();
                     document.querySelector('#redirect-str').textContent = "Redirecting...";
                     location.assign(url);
                 })();
