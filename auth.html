@@ -107,7 +107,7 @@
         function perform_sign_in(user) {
             if (urlparams.get('redirect')) {
                 (async function() {
-                    const url = new URL(urlparams.get('redirect'));
+                    const url = new URL(decodeURIComponent(urlparams.get('redirect')));
                     const params = url.searchParams;
                     params.set('jdevauth', 'true');
                     params.set('jdevauth_id_token', await user.auth.currentUser.getIdToken());
