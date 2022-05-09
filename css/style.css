@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    color: white;
+    background: #002233;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+}
+
+.nolink {
+    color: inherit;
+    text-decoration: none;
+}
+
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 200px;
+    padding: 100px 20vw;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 10vw;
+}
+
+.pale-blue {
+    background: #55a;
+}
+
+.blue {
+    background: #06f;
+}
+
+.red {
+    background: #C62368;
+}
+
+.wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.wave .shape-fill {
+    fill: #002233;
+}
+
+.wave-layered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.wave-layered svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 137px;
+}
+
+.wave-layered .shape-fill {
+    fill: #55a;
+}
+
+.spacer {
+    aspect-ratio: 960/300;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.spacer.layer1 {
+    background-image: url("/svg/wave-haikei.svg");
+}
+.spacer.layer2 {
+    background-image: url("/svg/layered-waves-haikei.svg");
+}
+.spacer.layer3 {
+    background-image: url("/svg/stacked-steps-haikei.svg");
+}
+
+.videogrid {
+    display: flex;
+    flex-wrap: wrap;
+}
+.videogrid iframe {
+    margin: 1rem;
+    width: calc(50% - 2rem);
+    height: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .videogrid iframe {
+        width: calc(100% - 2rem);
+    }
+
+    section {
+        padding: 50px 5vw;
+    }
+
+    .eventvideo {
+        width: 100%;
+        height: auto;
+    }
+}
