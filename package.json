@@ -1,5 +1,9 @@
 {
-  "scripts": {
-    "dev": "npx serve"
-  }
+    "scripts": {
+        "build": "cp -r src/ public/",
+        "dev": "nodemon --watch src --exec \"npm run build\""
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.16"
+    }
 }
