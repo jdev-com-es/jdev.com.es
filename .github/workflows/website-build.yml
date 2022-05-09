@@ -5,7 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -42,4 +44,4 @@ jobs:
           # Optional. Default value "gh_pages".
           # It specifies the temporary branch which hosts the static website.
           # Each build will OVERWRITE this branch.
-          target-branch: main
+          target-branch: gh_pages
