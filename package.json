@@ -1,9 +1,20 @@
 {
+    "main": "build.js",
+    "type": "module",
     "scripts": {
-        "build": "cp -r src/ public/",
+        "build": "node build.js",
         "dev": "nodemon --watch src --exec \"npm run build\""
     },
     "devDependencies": {
-        "nodemon": "^2.0.16"
+        "fs-extra": "^10.1.0",
+        "minify": "^8.0.4",
+        "nodemon": "^2.0.16",
+        "rimraf": "^3.0.2"
+    },
+    "build": {
+        "ignore": [],
+        "sourceDir": "src",
+        "outputDir": "public",
+        "templatesDir": "templates"
     }
 }
