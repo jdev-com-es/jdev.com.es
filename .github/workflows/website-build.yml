@@ -15,27 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: Use Node.js 14
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: 14
         
-    - run: npm i
+    - run: npm ci
     - run: npm run build --if-present
-    
-    - name: Publish current workdir (which contains generated content) to GitHub Pages
-      uses: rayluo/github-pages-overwriter@v1.2
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
       with:
-
-          # Optional. Default value "." means the root directory of your project will be published.
-          # You can use whatever directory your project uses, for example "wwwroot".
-          # Such a directory does *not* have to already exist in your repo,
-          # it could be an output directory created dynamically by your static website builder.
-          source-directory: "public"
-
-          # Optional. Default value "gh_pages".
-          # It specifies the temporary branch which hosts the static website.
-          # Each build will OVERWRITE this branch.
-          target-branch: gh_pages
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      publish_dir: ./public 
