@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><!-- TEMPLATE:DATA title --> - jDev Blog</title>
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
+
+    <meta name="description" content="<!-- TEMPLATE:DATA description -->">
+    <meta name="author" content="<!-- TEMPLATE:DATA author -->">
+    <meta name="color-scheme" content="dark">
+
+    <meta property="og:title" content="<!-- TEMPLATE:DATA title -->">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://jdev.com.es/$$relpath$$">
+    <meta property="og:image" content="https://jdev.com.es/img/favicon.png">
+    <meta property="og:description" content="<!-- TEMPLATE:DATA description -->">
+
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JanCraft/toolbox@1.0/src/toolbox.min.css">
+    <link rel="stylesheet" href="/css/article.css">
+</head>
+<body class="tbx-dark tbx-nav-fixed-offset">
+    <nav class="tbx-nav tbx-nav-fixed" role="navigation">
+        <a href="/" class="tbx-nav-brand">
+            <img src="/img/favicon.png" width="32" height="32">
+            <h1>jDev Blog</h1>
+        </a>
+    </nav>
+    
+    <article class="tbx-main" role="article">
+        <div class="tbx-card">
+            <small>
+                jDev Blog &gt; <!-- TEMPLATE:DATA category --> &gt; <!-- TEMPLATE:DATA title -->
+                <br>
+                <!-- TEMPLATE:DATA postdate -->
+            </small>
+            <h2><!-- TEMPLATE:DATA title --></h2>
+            <!-- TEMPLATE:CONTENT -->
+
+            <div class="tbx-card">
+                <img src="/img/<!-- TEMPLATE:DATA author -->.png" alt="" width="32">
+                <br>
+                <span>Written by <b><!-- TEMPLATE:DATA author --></b></span>
+                <br>
+            </div>
+            <a href="https://jdev.com.es/rss.xml"><img src="/img/rss.png" alt="RSS"></a>
+            <a href="javascript:navigator.share({title:'jDev Blog',url:location.href,text:document.title})"><img src="/img/share.png" alt="Share"></a>
+        </div>
+    </article>
+
+    <footer id="footer" class="tbx-footer">
+        Made with ❤️ by JanCraft
+    </footer>
+</body>
+</html>

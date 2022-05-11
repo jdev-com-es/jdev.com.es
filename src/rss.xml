@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+    <title>jDev Blog</title>
+    <link>https://jdev.com.es/</link>
+    <description>jDev is an organization aiming to create software, videogames and services for free to everyone on the internet!</description>
+    <item>
+        <title>New Website!</title>
+        <link>https://jdev.com.es/articles/2022-5-11-New-Website</link>
+        <description>The jDev website has been changed into a new form. Small and compact, we hope you like it!</description>
+    </item>
+</channel>
+
+</rss> 
