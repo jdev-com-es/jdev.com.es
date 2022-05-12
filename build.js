@@ -1,6 +1,10 @@
 import fs from 'fs-extra'
 import rimraf from 'rimraf'
+import xml2json from 'xml2json'
 const asyncRimraf = (path) => new Promise((resolve) => rimraf(path, resolve))
+
+const xmlRaw = await fs.readFile("./src/rss.xml")
+const xml = xml2json.toJson(xmlRaw, { object: true })
 
 const packjson = await fs.readJSON('package.json')
 const tpls = await fs.readdir(packjson.build.templatesDir)
@@ -32,5 +36,20 @@ await fs.copy(packjson.build.sourceDir, packjson.build.outputDir, { filter: (src
         fs.writeFileSync(dst.replaceAll('.tpl.html', '.html'), finalFile)
         return false
     }
+    if (dst.endsWith(".post.html")) {
+        let content = fs.readFileSync(src).toString()
+        const items = Array.isArray(xml.rss.channel.item) ? xml.rss.channel.item : [xml.rss.channel.item]
+        const auto_post_gen = items.map(item => `
+            <article role="article" class="tbx-card">
+                <a href="${item.link}">${item.title}</a>
+                <p>${item.description}</p>
+            </article>
+        `)
+        
+        content = content.replaceAll('$$auto_post_gen$$', auto_post_gen)
+        fs.writeFileSync(dst.replaceAll('.post.html', '.html'), content)
+        return false
+    }
+
     return true
 }})

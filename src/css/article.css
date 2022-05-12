@@ -1,5 +1,4 @@
 body > article {
-    width: 100%;
     display: flex;
     justify-content: center;
 }
@@ -7,4 +6,8 @@ body > article {
 body > article > .tbx-card {
     max-width: 75%;
     width: 75%;
+}
+
+.game-cover {
+    width: 7.5rem;
 }
